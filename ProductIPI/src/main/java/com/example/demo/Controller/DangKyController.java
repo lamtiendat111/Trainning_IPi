@@ -46,7 +46,7 @@ public class DangKyController {
 			System.out.println(e.getMessage());
 			error = "dang ky fail";
 		}
-		m.addAttribute("erorr", error);
+		m.addAttribute("error", error);
 		return "index";
 	}
 	

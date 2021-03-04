@@ -7,11 +7,11 @@
 
 </head>
 <body>
-<p th:text="${erorr}" />
+<p th:text="${error}" />
 	<h1>Đăng nhập</h1>
-	<form action="">
-		Username <input id="user" type="text">
-		pass <input id="pass" type="password">
+	<form action="/" method="post">
+		Username <input id="user" type="text" name="name">
+		pass <input id="pass" type="password" name="pass">
 		<button type="submit">đăng nhập</button>
 	</form>
 
