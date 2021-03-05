@@ -1,0 +1,126 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js">
+	
+</script>
+<title>Welcome</title>
+
+</head>
+<body>
+
+	<p th:text="${error}" />
+	<div id="errors" th:if="${param.error != null}">
+ 	<p th:text="${param.error}" />
+</div>
+	<h1>Product</h1>
+	<button id="list">List</button>
+	<div>
+		<table>
+			<tr>
+			<th>id</th>
+				<th>name</th>
+				<th>soluong</th>
+					<th>Edit</th>
+					<th>Delete</th>
+			</tr>
+			<tbody id="text-list">
+			</tbody>
+		</table>
+	</div>
+	<br>
+	<form action="/api/product2" method="get">
+
+		<input placeholder="name" name="name"> <input
+			placeholder="soluong" name="soluong">
+		<button type="submit">add</button>
+	</form>
+
+
+
+
+
+
+	<script type="text/javascript">
+		$(document)
+				.ready(
+						function() {
+							$("#list")
+									.click(
+											function() {
+												var pass = prompt("nhap pass");
+												$
+														.ajax({
+															type : 'get',
+															url : 'api/check',
+															data : {
+																pass : pass
+															},
+															success : function(
+																	data) {
+																if (data == "khop") {
+																	$.ajax({
+																				type : 'get',
+																				url : 'api/product',
+																			
+																				success : function(
+																						data1) {
+																					if (data1["list"] != null) {
+																						var html = "";
+																						for (var i = 0; i < data1["list"].length; i++) {
+																							html += `<tr><td>${data1["list"][i]["id"]}</td><td>${data1["list"][i]["name"]}</td><td>${data1["list"][i]["soluong"]}</td></td><td><a href="edit?id=${data1["list"][i]["id"]}&name=${data1["list"][i]["name"]}&soluong=${data1["list"][i]["soluong"]}">edit</a></td><td><a href="delete?id=${data1["list"][i]["id"]}&name=${data1["list"][i]["name"]}&soluong=${data1["list"][i]["soluong"]}">xoa</a></td></tr>`;
+																						}
+																						$("#text-list").append(html);
+																					} else {
+																						alert("else");
+																					}
+																				}
+																			});
+																} else {
+																	alert("nhap sai mat khau");
+																}
+
+															}
+
+														});
+											});
+
+							$("#button-new1").click(function() {
+								var id = null;
+								var hp = $("input[name='hp']").val();
+								var stamina = $("input[name='stamina']").val();
+								var atk = $("input[name='atk']").val();
+								var def = $("input[name='def']").val();
+								var agi = $("input[name='agi']").val();
+								$.ajax({
+									type : 'get',
+									url : 'api/create',
+									data : {
+										id : id,
+										hp : hp,
+										stamina : stamina,
+										atk : atk,
+										def : def,
+										agi : agi
+									},
+									success : function(data) {
+
+										if (data["status"] == true) {
+											$("#result").html("thanh cong");
+											alert("thanh cong");
+										} else {
+											$("#result").html(data["status"]);
+										}
+
+									}
+
+								});
+							});
+						});
+	</script>
+</body>
+
+</html>

@@ -1,0 +1,76 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8" />
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"> </script>
+<title>Welcome</title>
+
+</head>
+<body>
+<p th:text="${error}" />
+	<h1>Product</h1>
+<button id="list">List</button>
+<p id="text-list"> </p>
+	<br>
+	<button id="add">Add</button>
+
+
+
+
+
+<script type="text/javascript">
+$(document).ready(function() {
+	$("#list").click(function() {
+		$.ajax({
+			type: 'get',
+			url: 'api/product',
+			success: function(data) {
+
+				if (data["list"] != null) {
+					
+					$("#text-list").text(data["list"]);
+				}
+				else {
+					alert("else")
+				}
+
+			}
+
+
+		});
+	});
+
+	$("#button-new1").click(function() {
+		var id = null;
+		var hp = $("input[name='hp']").val();
+		var stamina = $("input[name='stamina']").val();
+		var atk = $("input[name='atk']").val();
+		var def = $("input[name='def']").val();
+		var agi = $("input[name='agi']").val();
+		$.ajax({
+			type: 'get',
+			url: 'api/create',
+			data: {
+				id: id, hp: hp, stamina: stamina, atk: atk, def: def, agi: agi
+			},
+			success: function(data) {
+				
+				if (data["status"] == true) {
+					$("#result").html("thanh cong");
+					alert("thanh cong");
+				}
+				else {
+					$("#result").html(data["status"]);
+				}
+
+			}
+
+
+		});
+	});
+});
+</script>
+</body>
+
+</html>
